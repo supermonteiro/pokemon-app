@@ -1,0 +1,12 @@
+<h2>Comments</h2>
+<ul>
+    <li *ngFor="let comment of comments">{{ comment }}</li>
+</ul>
+<form [formGroup]="commentForm" (ngSubmit)="addComment()">
+    <mat-form-field>
+        <input matInput placeholder="Comment" formControlName="comment" required>
+        <mat-error *ngIf="commentForm.controls['comment'].invalid">Comment is required</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Add Comment</button>
+</form>
+

@@ -1,0 +1,73 @@
+<ng-container *ngIf="!loading">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>{{ pokemon.name | titlecase }}</mat-card-title>
+            <button mat-raised-button color="primary" (click)="openEditDialog()">Editar</button>
+        </mat-card-header>
+        <mat-card-content>
+            <img [src]="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + pokemon.id + '.png'"
+                [alt]="pokemon.name" />
+            <ul>
+                <li><strong>Height:</strong> {{ pokemon.height }}</li>
+                <li><strong>Weight:</strong> {{ pokemon.weight }}</li>
+                <li><strong>Abilities:</strong>
+                    <ul>
+                        <li *ngFor="let ability of pokemon.abilities">{{ ability.name | titlecase }}</li>
+                    </ul>
+                </li>
+                <li><strong>Types:</strong>
+                    <ul>
+                        <li *ngFor="let type of pokemon.types">{{ type.name | titlecase }}</li>
+                    </ul>
+                </li>
+            </ul>
+                
+                
+                <button mat-raised-button color="primary" (click)="openDialog()">Edit</button>
+                <button mat-raised-button [color]="favoriteService.isFavorite(pokemon.id) ? 'warn' : 'primary'"
+                    (click)="toggleFavorite()">
+                    {{ favoriteService.isFavorite(pokemon.id) ? 'Remove from Favorites' : 'Add to Favorites' }}
+                </button>
+                
+                <mat-dialog-content>
+                    <h2 mat-dialog-title>Edit Pokémon</h2>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Name</mat-label>
+                        <input matInput [(ngModel)]="pokemon.name">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Height</mat-label>
+                        <input matInput [(ngModel)]="pokemon.height">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Weight</mat-label>
+                        <input matInput [(ngModel)]="pokemon.weight">
+                    </mat-form-field>
+                </mat-dialog-content>
+                
+                <mat-dialog-actions>
+                    <button mat-button (click)="dialogRef.close()">Cancel</button>
+                    <button mat-button color="primary" (click)="saveChanges(pokemon)">Save</button>
+                </mat-dialog-actions>
+            </mat-card-content>    
+    </mat-card>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Comments</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-list>
+                <mat-list-item *ngFor="let comment of pokemon.comments">
+                    {{ comment }}
+                </mat-list-item>
+            </mat-list>
+    
+            <mat-form-field appearance="fill">
+                <mat-label>Add a comment</mat-label>
+                <input matInput [(ngModel)]="newComment">
+            </mat-form-field>
+            <app-pokemon-comments></app-pokemon-comments>
+            <button mat-raised-button color="primary" (click)="addComment(pokemon, newComment)">Add</button>
+        </mat-card-content>
+    </mat-card>
+</ng-container>

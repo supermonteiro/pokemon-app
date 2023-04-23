@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Edit {{ data.pokemon.name }}</h2>
+<form [formGroup]="pokemonForm" (ngSubmit)="onSubmit()">
+    <mat-dialog-content>
+        <mat-form-field>
+            <input matInput placeholder="Name" formControlName="name" required>
+            <mat-error *ngIf="pokemonForm.controls['name'].invalid">Name is required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Image URL" formControlName="imageUrl" required>
+            <mat-error *ngIf="pokemonForm.controls['imageUrl'].invalid">Image URL is required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Height" formControlName="height" required>
+            <mat-error *ngIf="pokemonForm.controls['height'].invalid">Height is required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Weight" formControlName="weight" required>
+            <mat-error *ngIf="pokemonForm.controls['weight'].invalid">Weight is required</mat-error>
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button (click)="onCancel()">Cancel</button>
+        <button mat-raised-button color="primary" type="submit">Save</button>
+    </mat-dialog-actions>
+</form>
